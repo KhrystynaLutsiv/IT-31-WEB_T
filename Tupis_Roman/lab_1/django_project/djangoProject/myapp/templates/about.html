@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunter - About</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        .chests {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .chest {
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 100px;
+            height: 120px;
+            background-color: #8b4513;
+            border: 2px solid #5c3317;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chest:hover {
+            transform: scale(1.1);
+        }
+
+        .chest:active {
+            transform: scale(1.05);
+        }
+
+        .chest.open {
+            background-color: #f39c12;
+        }
+
+        .chest.win {
+            background-color: #27ae60; /* Зелений колір для перемоги */
+        }
+
+        .chest.lose {
+            background-color: #e74c3c; /* Червоний колір для програшу */
+        }
+
+        .chest::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 80px;
+            height: 10px;
+            background-color: #d35400;
+            border-radius: 3px;
+        }
+
+        .chest::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 80px;
+            height: 10px;
+            background-color: #d35400;
+            border-radius: 3px;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .restart-btn {
+            margin-top: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .restart-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .treasure {
+            display: none;
+            width: 50px;
+            height: 50px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/616/616489.png');
+            background-size: cover;
+            margin-top: 10px;
+        }
+
+        .chest.win .treasure {
+            display: block;
+        }
+    </style>
+    <script>
+        let treasureLocation = Math.floor(Math.random() * 3); // Генеруємо випадкове положення скарбу
+        let attempts = 3;
+
+        function checkChest(chestIndex) {
+            if (attempts > 0) {
+                const chests = document.getElementsByClassName('chest');
+
+                if (chestIndex === treasureLocation) {
+                    chests[chestIndex].classList.add('win');
+                    document.getElementById("message").innerText = "Congratulations! You found the treasure!";
+                    disableChests();
+                } else {
+                    chests[chestIndex].classList.add('lose');
+                    attempts--;
+                    document.getElementById("message").innerText = `No treasure here! Attempts left: ${attempts}`;
+                }
+
+                if (attempts === 0) {
+                    document.getElementById("message").innerText = "Game over! No more attempts.";
+                    disableChests();
+                }
+            }
+        }
+
+        function disableChests() {
+            const chests = document.getElementsByClassName('chest');
+            for (let i = 0; i < chests.length; i++) {
+                chests[i].style.pointerEvents = 'none'; // Вимикаємо можливість натискання
+            }
+        }
+
+        function restartGame() {
+            treasureLocation = Math.floor(Math.random() * 3);
+            attempts = 3;
+            document.getElementById("message").innerText = "Find the treasure!";
+            const chests = document.getElementsByClassName('chest');
+            for (let i = 0; i < chests.length; i++) {
+                chests[i].style.pointerEvents = 'auto'; // Увімкнути скрині знову
+                chests[i].classList.remove('win', 'lose'); // Прибираємо кольори
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Treasure Hunt!</h1>
+        <div class="chests">
+            <div class="chest" onclick="checkChest(0)">
+                <div class="treasure"></div>
+            </div>
+            <div class="chest" onclick="checkChest(1)">
+                <div class="treasure"></div>
+            </div>
+            <div class="chest" onclick="checkChest(2)">
+                <div class="treasure"></div>
+            </div>
+        </div>
+        <p id="message" class="message">Find the treasure!</p>
+        <button class="restart-btn" onclick="restartGame()">Restart</button>
+        <p><a href="{% url 'home' %}">Back to Home</a></p>
+    </div>
+</body>
+</html>
