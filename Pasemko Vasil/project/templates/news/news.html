@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}add{% endblock%}
+
+{% block content %}
+    <p>lorem11</p><br>
+    
+    {% if news %}
+    
+        {% for el in news %}
+            <p>{{ el.title }}</p>
+            <p>{{ el.anons }}</p>
+        {% endfor %}
+        
+    {% endif %}
+{% endblock%}
