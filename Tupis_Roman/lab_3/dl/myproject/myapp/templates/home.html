@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Головна - Вибір Ігор</title>
+    <title>Головна - Вибір Книг</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
+            color: #333;
         }
         header {
-            background: #333;
+            background: #4a90e2;
             color: #fff;
-            padding: 10px 0;
+            padding: 20px 0;
             text-align: center;
         }
         nav ul {
@@ -28,53 +29,75 @@
         nav ul li a {
             color: #fff;
             text-decoration: none;
+            font-weight: bold;
         }
         .game-selection {
             text-align: center;
-            margin: 20px;
+            margin: 40px 20px;
         }
         .game-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 20px;
         }
         .game-card {
             background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
             margin: 10px;
             padding: 15px;
-            width: 200px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            width: 220px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .game-card img {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
         }
         .game-card h3 {
-            margin: 0;
-            font-size: 18px;
+            margin: 10px 0 5px;
+            font-size: 20px;
+            color: #333;
         }
         .game-card p {
             font-size: 14px;
             color: #666;
+            height: 60px; /* Fixed height for consistency */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; /* Limit lines to 3 */
         }
         button {
             background: #5cb85c;
             border: none;
             color: #fff;
-            padding: 10px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-size: 14px;
+            transition: background 0.3s, transform 0.2s;
         }
         button:hover {
             background: #4cae4c;
+            transform: scale(1.05);
         }
         footer {
             text-align: center;
-            padding: 10px 0;
+            padding: 20px 0;
             background: #333;
             color: #fff;
             position: relative;
             bottom: 0;
             width: 100%;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -88,52 +111,53 @@
             <h2>Виберіть книгу</h2>
             <div class="game-list">
                 <div class="game-card">
-                    <img width=100% src="https://upload.wikimedia.org/wikipedia/uk/c/c5/%D0%93%D0%9F%D0%A4%D0%9A%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg" alt="Гаррі Поттер і філософський камінь">
-                    <h3>Гарі Потер і Філософський камінь</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/uk/c/c5/%D0%93%D0%9F%D0%A4%D0%9A%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg" alt="Гаррі Потер і Філософський камінь">
+                    <h3>Гаррі Потер і Філософський камінь</h3>
+                    <p>Гаррі Поттер і філософський камінь — це перша книга в серії Джоан Роулінг, де хлопчик-сирота Гаррі Поттер дізнається, що він є чаклуном, і починає своє навчання в школі магії Хогвартс, де зустрічає нових друзів і стикається з темними силами.</p>
                     <button onclick="window.location.href='{% static 'pdfs/1.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://uaserial.com/images/serials/64/640f43270dee0313680714.webp" alt="Фільм Гаррі Поттер і таємна кімната українською онлайн.">
+                    <img src="https://uaserial.com/images/serials/64/640f43270dee0313680714.webp" alt="Фільм Гаррі Поттер і таємна кімната українською онлайн.">
                     <h3>Фільм Гаррі Поттер і таємна кімната.</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <p>Фільм Гаррі Поттер і таємна кімната — це друга частина серії, в якій Гаррі Поттер повертається до Хогвартса і стикається з новими небезпеками, коли таємнича кімната в школі відкривається, наражаючи на небезпеку студентів і розкриваючи темну таємницю минулого.</p>
                     <button onclick="window.location.href='{% static 'pdfs/2.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://storage.googleapis.com/pod_public/1300/114437.jpg" alt="Гаррі Поттер та в'язень Азкабану">
+                    <img src="https://storage.googleapis.com/pod_public/1300/114437.jpg" alt="Гаррі Поттер та в'язень Азкабану">
                     <h3>Гаррі Поттер та в'язень Азкабану</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <p>Гаррі Поттер та в'язень Азкабану — третя частина серії, в якій Гаррі дізнається, що небезпечний втікач Сіріус Блек, вважаючи його винним у зраді його батьків, переслідує його, і разом з друзями розкриває правду про своє минуле та істинні причини вбивства своїх батьків.</p>
                     <button onclick="window.location.href='{% static 'pdfs/3.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://ukrface.fra1.cdn.digitaloceanspaces.com/jarvis/thumbnail/mobile-poster/posters/166/e57bee5852c6375e5527.jpg" alt="Гаррі Поттер і келих вогню">
+                    <img src="https://ukrface.fra1.cdn.digitaloceanspaces.com/jarvis/thumbnail/mobile-poster/posters/166/e57bee5852c6375e5527.jpg" alt="Гаррі Поттер і келих вогню">
                     <h3>Гаррі Поттер і келих вогню</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <p>Гаррі Поттер і келих вогню — четверта частина серії, в якій Гаррі несподівано стає учасником смертельного Турніру трьох чаклунів, стикаючись із небезпечними випробуваннями, і виявляє змови темних сил, що загрожують світу магії.</p>
                     <button onclick="window.location.href='{% static 'pdfs/4.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://uaserial.com/images/serials/64/640f432f5e5d0918420615.webp" alt="Фільм Гаррі Поттер та Орден Фенікса">
+                    <img src="https://uaserial.com/images/serials/64/640f432f5e5d0918420615.webp" alt="Фільм Гаррі Поттер та Орден Фенікса">
                     <h3>Фільм Гаррі Поттер та Орден Фенікса</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <p>Фільм Гаррі Поттер та Орден Фенікса — п'ята частина серії, в якій Гаррі і його друзі створюють таємну групу, щоб протистояти новим загрозам, оскільки Міністерство магії заперечує повернення Волдеморта, а сам Гаррі мусить навчитися керувати своїми силами і приймати на себе відповідальність за боротьбу з темрявою.</p>
                     <button onclick="window.location.href='{% static 'pdfs/5.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://content.rozetka.com.ua/goods/images/big/47839267.jpg" alt="Гаррі Поттер і Напівкровний Принц">
+                    <img src="https://content.rozetka.com.ua/goods/images/big/47839267.jpg" alt="Гаррі Поттер і Напівкровний Принц">
                     <h3>Гаррі Поттер і Напівкровний Принц</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <p>Гаррі Поттер і Напівкровний Принц — шоста частина серії, в якій Гаррі дізнається більше про минуле Волдеморта через уроки з Дамблдором, а також стикається з новими викликами в Хогвартсі, де загострюються конфлікти, і темні сили набирають сили, що призводить до трагічних подій.</p>
                     <button onclick="window.location.href='{% static 'pdfs/6.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://upload.wikimedia.org/wikipedia/uk/b/be/%D0%93%D0%9F7_%D0%A7%D0%B0%D1%81%D1%82%D0%B8%D0%BD%D0%B0_1_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%83%D0%BA%D1%80.jpg" alt="Гаррі Поттер і Смертельні Реліквії: Частина 1">
+                    <img src="https://upload.wikimedia.org/wikipedia/uk/b/be/%D0%93%D0%9F7_%D0%A7%D0%B0%D1%81%D1%82%D0%B8%D0%BD%D0%B0_1_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%83%D0%BA%D1%80.jpg" alt="Гаррі Поттер і Смертельні Реліквії: Частина 1">
                     <h3>Гаррі Поттер і Смертельні Реліквії: Частина 1</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
+                    <p>
+Гаррі Поттер і Смертельні Реліквії: Частина 1 — перша частина заключної книги серії, в якій Гаррі, Рон і Герміона залишають Хогвартс і вирушають у небезпечну подорож, щоб знайти та знищити горокракси Волдеморта, при цьому їм доводиться стикатися з новими загрозами та втраченими друзями.</p>
                     <button onclick="window.location.href='{% static 'pdfs/7.pdf' %}'">Читати</button>
                 </div>
                 <div class="game-card">
-                    <img width=100% src="https://mixfilm.net/uploads/posts/2017-12/1512336278-373930491-garri-potter-i-dary-smerti-chast-ii.webp" alt="Гаррі Поттер і Смертельні реліквії: Частина 2">
+                    <img src="https://mixfilm.net/uploads/posts/2017-12/1512336278-373930491-garri-potter-i-dary-smerti-chast-ii.webp" alt="Гаррі Поттер і Смертельні реліквії: Частина 2">
                     <h3>Гаррі Поттер і Смертельні реліквії: Частина 2</h3>
-                    <p>це захоплююча казкова історія про хлопчика-сироту Гаррі Поттера. Він живе в домінуванні своїх жахливих тітки та дядька. Однак його життя змінюється назавжди, коли він дізнається про своє справжнє походження – він є чаклуном.</p>
-                    <button onclick="window.location.href='{% static 'pdfs/7.pdf' %}'">Читати</button>
+                    <p>Гаррі Поттер і Смертельні реліквії: Частина 2 — друга частина заключної книги серії, де відбувається фінальна битва за Хогвартс, Гаррі розкриває останні таємниці Волдеморта, і з друзями намагається зупинити темряву, що загрожує магічному світу, влаштовуючи епічну боротьбу за перемогу.</p>
+                    <button onclick="window.location.href='{% static 'pdfs/8.pdf' %}'">Читати</button>
                 </div>
             </div>
         </section>
