@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select a Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f7ff;
+            text-align: center;
+            padding: 50px;
+        }
+        .game-list {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .game {
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            width: 200px;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .game:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .game h3 {
+            margin: 10px 0;
+        }
+        .coming-soon {
+            color: gray;
+            font-style: italic;
+            font-size: 14px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+            background-color: #28a745;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #218838;
+        }
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .popup button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 1px solid #000;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+        .cell.taken {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a Game</h1>
+    <div class="game-list">
+        <div class="game">
+            <h3>Tic Tac Toe</h3>
+            <p>A classic game of Xs and Os!</p>
+            <button onclick="startTicTacToe()">Play Now</button>
+        </div>
+        <div class="game" onclick="showPopup()">
+            <h3>Coming Soon</h3>
+            <p class="coming-soon">New exciting games will be available soon!</p>
+        </div>
+    </div>
+    <a href="/" class="back-button">Back to Home</a>
+
+    <div class="popup" id="popup">
+        <p>The game is not available yet. Stay tuned!</p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <div id="ticTacToe" style="display: none;">
+        <h2>Tic Tac Toe</h2>
+        <div class="game-board" id="gameBoard"></div>
+        <button class="back-button" onclick="exitTicTacToe()">Exit Game</button>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function startTicTacToe() {
+            document.querySelector('.game-list').style.display = 'none';
+            document.getElementById('ticTacToe').style.display = 'block';
+            initializeBoard();
+        }
+
+        function exitTicTacToe() {
+            document.querySelector('.game-list').style.display = 'flex';
+            document.getElementById('ticTacToe').style.display = 'none';
+        }
+
+        function initializeBoard() {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.addEventListener('click', () => makeMove(cell));
+                board.appendChild(cell);
+            }
+        }
+
+        let currentPlayer = 'X';
+        let gameOver = false;
+            function makeMove(cell) {
+                if (!cell.textContent && !gameOver) {
+                    cell.textContent = currentPlayer;
+                    cell.classList.add('taken');
+                    if (checkWin()) {
+                        setTimeout(() => {
+                            alert(`${currentPlayer} wins!`);
+                            offerReplay();
+                        }, 200);
+                        gameOver = true;
+                    } else if (isDraw()) {
+                        setTimeout(() => {
+                            alert('It\'s a draw!');
+                            offerReplay();
+                        }, 200);
+                        gameOver = true;
+                    } else {
+                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    }
+                }
+            }
+
+            function checkWin() {
+                const cells = document.querySelectorAll('.cell');
+                const winPatterns = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6],
+                ];
+
+                return winPatterns.some(pattern =>
+                    cells[pattern[0]].textContent === currentPlayer &&
+                    cells[pattern[1]].textContent === currentPlayer &&
+                    cells[pattern[2]].textContent === currentPlayer
+                );
+            }
+
+            function isDraw() {
+                return Array.from(document.querySelectorAll('.cell')).every(cell => cell.textContent);
+            }
+
+            function offerReplay() {
+                const replay = confirm('Do you want to play again?');
+                if (replay) {
+                    resetGame();
+                } else {
+                    exitTicTacToe();
+                }
+            }
+
+            function resetGame() {
+                currentPlayer = 'X';
+                gameOver = false;
+                initializeBoard();
+        }
+    </script>
+</body>
+</html>
